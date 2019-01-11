@@ -6,15 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | KiFF blog</title>
+  <title>LCD驱动合集(持续更新) | KiFF blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KiFF blog">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="基于Exynos4412的RGB-LCD驱动。">
+<meta name="keywords" content="驱动,Linux驱动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LCD驱动合集(持续更新)">
+<meta property="og:url" content="http://yoursite.com/2018/10/08/LCD驱动合集/index.html">
 <meta property="og:site_name" content="KiFF blog">
+<meta property="og:description" content="基于Exynos4412的RGB-LCD驱动。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-2/7806896.jpg">
+<meta property="og:image" content="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/83426623.jpg">
+<meta property="og:image" content="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/63931007.jpg">
+<meta property="og:image" content="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/39151119.jpg">
+<meta property="og:image" content="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/78970933.jpg">
+<meta property="og:image" content="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/92239019.jpg">
+<meta property="og:image" content="https://i.creativecommons.org/l/by/4.0/88x31.png">
+<meta property="og:updated_time" content="2018-09-20T10:26:19.497Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KiFF blog">
+<meta name="twitter:title" content="LCD驱动合集(持续更新)">
+<meta name="twitter:description" content="基于Exynos4412的RGB-LCD驱动。">
+<meta name="twitter:image" content="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-2/7806896.jpg">
   
     <link rel="alternative" href="/atom.xml" title="KiFF blog" type="application/atom+xml">
   
@@ -152,36 +165,161 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-LCD驱动合集" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      LCD驱动合集(持续更新)
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/08/LCD驱动合集/" class="archive-article-date">
+
+        
+        <a href="/2018/10/08/LCD驱动合集/" class="archive-article-date">
   	<time datetime="2018-10-08T06:35:20.521Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/08/LCD驱动合集/">LCD驱动合集(持续更新)</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>基于Exynos4412的RGB-LCD驱动。</p>
+<a id="more"></a>
+<blockquote>
+<p>实验环境</p>
+<pre><code>- Bootloader    : uboot_tiny4412-20130729.tgz
+- Kernel        : linux-4.4.1
+- Rootfs        : busybox
+- toolchain     : gcc version 4.8.3
+</code></pre></blockquote>
+<h1 id="1-背景知识"><a href="#1-背景知识" class="headerlink" title="1 背景知识"></a>1 背景知识</h1><p>LCD(Liquid Crystal Display)学名<a href="https://baike.baidu.com/item/LCD/361823?fr=aladdin" target="_blank" rel="noopener">液晶显示器</a>。LCD的构造是在两片平行的玻璃基板当中放置液晶盒，下基板玻璃上设置TFT（薄膜晶体管），上基板玻璃上设置彩色滤光片，通过TFT上的信号与电压改变来控制液晶分子的转动方向，从而达到控制每个像素点偏振光出射与否而达到显示目的。液晶的显示器的物理特性是：当通电导通时，液晶的排列变得有序，使得光线容易通过；不通电时，液晶的排列混乱，阻止光线通过。</p>
+<h2 id="1-1-LCD分类"><a href="#1-1-LCD分类" class="headerlink" title="1.1 LCD分类"></a>1.1 LCD分类</h2><ul>
+<li><p><strong>STN</strong>：STN(Super Teisted Nematic)属于无源被动矩阵式LCD，几乎所有黑白屏手机的液晶屏都是这种材料。彩色STN液晶屏就是在单色的STN液晶屏基础上加个彩色滤光片，并将单色显示矩阵中的每个像素分成三个子像素，分别通过彩色滤光片显示红、绿、蓝三种颜色，从而实现彩色画面。由于技术的限制，目前STN液晶屏最高只有65536种色彩，市场上见到的大多数都是4096色的STN产品，所以STN也被称为”伪彩”。</p>
+</li>
+<li><p><strong>GF</strong>：GF(Glass Fine)，或许大家对GF液晶屏较为陌生，因为市面上采用GF液晶屏数码产品非常少，其实GF属于STN的一种，GF的主要特点是：在保证功耗较小的前提下亮度有所提高，但GF液晶屏有些偏色。</p>
+</li>
+<li><p><strong>TFT</strong>：TFT(Thin Film Transistor)又称为”真彩”，它属于有源矩阵液晶屏，它是由薄膜晶体管组成的屏幕，它的每个液晶像素点都是由薄膜晶体管来驱动，每个像素点后面都有四个相互独立的薄膜晶体管驱动像素点发出彩色光，可显示24bit色深的真彩色。在分辨率上，TFT液晶屏最大可以达到UXGA(1600×1200)。TFT的排列方式具有记忆性，所以电流消失后不会马上恢复原状，从而改善了STN液晶屏闪烁和模糊的缺点，有效地提高了液晶屏显示动态画面的效果，在显示静态画面方面的能力也更加突出，TFT液晶屏的优点是响应时间比效短，并且色彩艳丽，所以它被广泛使用于笔记本电脑和DV、DC上。而TFT液晶屏的缺点就是比较耗电，并且成本也比较高。</p>
+</li>
+<li><p><strong>TFD</strong>：TFD(Thin Film Diode)，由于TFT液晶屏耗电量较高，而且成本较高，从而大大增加了产品的成本，所以EPSON专门为手机屏幕开发出了TFD技术，它同样属于有源矩阵液晶屏，LCD上的每一个像素都配备了一颗单独的二极管，可以对每个像素进行单独控制，使每个像素之间不会互相影响，这样可以明显提高分辨率，可以无拖尾地显示动态画面和绚丽的色彩。在性能方面，TFD液晶屏兼顾了TFT液晶屏和STN液晶屏的优点，TFD液晶屏比STN液晶屏的亮度更高，并且色彩也更鲜艳，同时比TFT液晶屏更省电，不过在色彩和亮度上还是比TFT液晶逊色一些。</p>
+</li>
+<li><p><strong>OLED</strong>：OLED(Organic Light Emitting Display)，也称有机发光显示屏，它采用了有机发光技术，这是目前最新的显示技术，OLED显示技术与传统的液晶显示方式不同，它不需要背光灯，而是采用非常薄的有机材料涂层和玻璃基板，当有电流通过时，这些有机材料就会发光，所以它的视角很大，从各个方向都可以看清楚屏幕上的内容，并且可以做得很薄。<br></p>
+</li>
+</ul>
+<h2 id="1-2-LCD接口"><a href="#1-2-LCD接口" class="headerlink" title="1.2 LCD接口"></a>1.2 LCD接口</h2><p>常见的LCD接口有SPI、MCU、RGB、LVDS、EDP、MIPI；下面就详细的说下这几种接口的区别；</p>
+<ul>
+<li><p><strong>SPI</strong>：SPI(Serial Peripheral Interface)接口是串行外设接口，一般用于小尺寸的SPI OLED。接口连线分为：CS，CLK，SDI，SDO，DC。优点是：接口简单。</p>
+</li>
+<li><p><strong>MCU</strong>：MCU模式下常见的模式有8080模式和6800模式两种，两种模式主要区别是时序不同；数据位传输有8位，9位，16位，18位，24位等。接口连线分为：CS/，RS(寄存器选择），RD/，WR/和数据线。优点是：控制简单方便，无需时钟和同步信号。缺点是：要耗费GRAM，所以难以做到大屏(3.8以上)。</p>
+</li>
+<li><p><strong>RGB</strong>：RGB模式是大屏采用较多的模式；数据位传输有8位，16位，18位，24位，32位等。接口连线分为：VSYNC，HSYNC，VDEN，VCLK和数据线。</p>
+</li>
+<li><p><strong>LVDS</strong>：LVDS(Low Voltage Differential Signaling)是一种低压差分信号技术接口，利用非常低的电压摆幅（约350mV）在两条PCB走线或一对平衡电缆上通过差分进行数据的传输，即低压差分信号传输。LVDS是为克服以TTL电平方式传输宽带高码率数据时功耗大、EMI电磁干扰大等缺点而研制的一种数字视频信号传输方式。采用LVDS输出接口，可以使得信号在差分PCB线或平衡电缆上以几百Mbit/s的速率传输，由于采用低压和低电流驱动方式，因此，实现了低噪声和低功耗。接口连线分为：一组时钟线和若干组信号线[6bit模式下使用三组信号线，8bit模式下使用四组信号线]。优点是：接口简单，传输速度快，抗干扰能力强。</p>
+</li>
+<li><p><strong>EDP</strong>：eDP(Embedded Display Port)接口是一种基于DisplayPort架构和协议的一种全数字化接口，可以用较简单的连接器以及较少的引脚来传递高分辨率信号，且能够实现多数据同时传输；eDP接口是电脑显示屏常用的一种通信接口，采用EDP显示接口的电脑分辨率会比LVDS接口的显示分辨率高，一般高清屏都是采用这种通信接口。接口连线分为：若干组信号线，辅助通道信号线和热插拔检测信号线。优点是：分辨率高，传输速度很快。</p>
+</li>
+<li><p><strong>MIPI</strong>：MIPI(Mobile Industry Processor Interface)接口MIPI联盟发起的为移动应用处理器制定的开放标准。常见的MIPI接口分别是DSI显示接口(用于显示屏模组)和CSI摄像头接口(用于摄像头模组)；接口连线分为：一组时钟线和若干组信号线。优点是：接口简单，传输速度快，低功耗。</p>
+</li>
+</ul>
+<h2 id="1-3-颜色空间"><a href="#1-3-颜色空间" class="headerlink" title="1.3 颜色空间"></a>1.3 颜色空间</h2><ul>
+<li><p><strong>RGB颜色空间</strong>：计算机色彩显示器和彩色电视机显示色彩的原理一样，都是采用R、G、B相加混色的原理，通过发射出三种不同强度的电子束，使屏幕内侧覆盖的红、绿、蓝磷光材料发光而产生色彩。这种色彩的表示方法称为RGB色彩空间表示。</p>
+</li>
+<li><p><strong>YUV颜色空间</strong>：YUV(亦称YCrCb)是被欧洲电视系统所采用的一种颜色编码方法。在现代彩色电视系统中，通常采用三管彩色摄像机或彩色CCD摄影机进行取像，然后把取得的彩色图像信号经分色、分别放大校正后得到RGB，再经过矩阵变换电路得到亮度信号Y和两个色差信号R-Y(即U)、B-Y(即V)，最后发送端将亮度和两个色差总共三个信号分别进行编码，用同一信道发送出去。这种色彩的表示方法就是所谓的YUV色彩空间表示。采用YUV色彩空间的重要性是它的亮度信号Y和色度信号U、V是分离的。如果只有Y信号分量而没有U、V信号分量，那么这样表示的图像就是黑白灰度图像。彩色电视采用YUV空间正是为了用亮度信号Y解决彩色电视机与黑白电视机的兼容问题，使黑白电视机也能接收彩色电视信号。</p>
+</li>
+<li><p><strong>HSV颜色空间</strong>：HSV是一种将RGB色彩空间中的点在倒圆锥体中的表示方法。HSV即色相(Hue)、饱和度(Saturation)、明度(Value)，又称HSB(B即Brightness)。色相是色彩的基本属性，就是平常说的颜色的名称，如红色、黄色等。饱和度（S）是指色彩的纯度，越高色彩越纯，低则逐渐变灰，取0-100%的数值。明度（V），取0-max(计算机中HSV取值范围和存储的长度有关)。HSV颜色空间可以用一个圆锥空间模型来描述。圆锥的顶点处，V=0，H和S无定义，代表黑色。圆锥的顶面中心处V=max，S=0，H无定义，代表白色。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>RGB与YUV转换公式(RGB取值范围均为0~255)</strong><br>&#160;&#160;&#160;Y = 0.299R + 0.587G + 0.114B<br>　U = -0.147R - 0.289G + 0.436B<br>　V = 0.615R - 0.515G - 0.100B</p>
+</blockquote>
+<blockquote>
+<p><strong>YUV与RGB转换公式</strong><br>　R = Y + 1.14V<br>　G = Y - 0.39U - 0.58V<br>　B = Y + 2.03U</p>
+</blockquote>
+<h2 id="1-4-图像组成"><a href="#1-4-图像组成" class="headerlink" title="1.4 图像组成"></a>1.4 图像组成</h2><ul>
+<li><p><strong>像素</strong>：像素是图像显示的基本单位。每个像素是由若干位数据组合而成，像素的单位是像素深度(BPP)，表示存储每个像素所用的位数，也是用来度量图像的分辨率。</p>
+</li>
+<li><p><strong>分辨率</strong>：分辨率决定了位图图像细节的精细程度。图像分辨率是单位英寸中所包含的像素点数，通常情况下，图像的分辨率越高，所包含的像素就越多，图像就越清晰。同时，它也会增加文件占用的存储空间。分辨率的单位：(dpi点每英寸)、lpi(线每英寸)和ppi(像素每英寸)。[ppi和lpi可以换算，lpi等于ppi的一半]</p>
+<center> <img src="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-2/7806896.jpg" alt=""> </center>
+</li>
+<li><p><strong>帧</strong>：一幅图像里所有像素点的集合称为帧。一帧数据就是一副图像。</p>
+</li>
+</ul>
+<h1 id="2-硬件连接"><a href="#2-硬件连接" class="headerlink" title="2 硬件连接"></a>2 硬件连接</h1><center> <img src="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/83426623.jpg" alt=""> </center><br><center> <strong>LCD各类接口硬件连接图</strong> </center><br>通过上面的接口硬件连接图，可以知道LCD的接口大致可以分为数据接口、时钟接口和控制接口。<br><br># 3 LCD时序分析<br>首先看下内核文档给出的说明：<em>Documentation/fb/framebuffer.txt</em><br><center> <img src="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/63931007.jpg" alt=""> </center><br>&gt; 水平方向的参数<br>    xres : 水平方向的分辨率<br>    left_margin : 左边界<br>    right_margin : 右边界<br>    hsync_len : 水平方向同步时间<br><br>&gt; 垂直方向的参数<br>    yres : 垂直方向的分辨率<br>    upper_margin : 上边界<br>    lower_margin : 下边界<br>    vsync_len : 垂直方向同步时间<br><br>## 3.1 SPI-LCD时序<br>填坑，以后再来补充….<br>## 3.2 MCU-LCD时序<br>填坑，以后再来补充….<br>## 3.3 RGB-LCD时序<br>下面简单的分析下RGB接口的LCD屏的时序图，看下三星datasheet文档：<em>Exynos 4412 SCP_Users Manual_Ver.0.10.00_Preliminary0.pdf</em><br><center> <img src="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/39151119.jpg" alt=""> </center>
 
-        <div class="article-info info-on-right">
-          
+<blockquote>
+<p>水平方向的参数<br>    HOZVAL : 水平方向的分辨率<br>    HBPD : 行同步信号后肩<br>    HFPD : 行同步信号前肩<br>    HSPW : 水平方向同步时间</p>
+</blockquote>
+<blockquote>
+<p>垂直方向的参数<br>    LINEVAL : 垂直方向的分辨率<br>    VBPD : 垂直同步信号后肩<br>    VFPD : 垂直同步信号前肩<br>    VSPW : 垂直方向同步时间</p>
+</blockquote>
+<p>再看LCD的datasheet文档：<em>S702-AT070TN92.pdf</em></p>
+<center> <img src="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/78970933.jpg" alt=""> </center><br><center> <img src="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-9-5/92239019.jpg" alt=""> </center>
+
+<blockquote>
+<p>水平方向的参数<br>    thd : 水平方向的分辨率<br>    thb-thpw : 行同步信号后肩<br>    thfp: 行同步信号前肩<br>    thpw : 水平方向同步时间</p>
+</blockquote>
+<blockquote>
+<p>垂直方向的参数<br>    tvd : 垂直方向的分辨率<br>    tvb-tvpw : 垂直同步信号后肩<br>    tvfp : 垂直同步信号前肩<br>    tvpw : 垂直方向同步时间</p>
+</blockquote>
+<p>从内核提供的FB时序图、三星 datasheet和LCD datasheet可以得出以下结论：</p>
+<blockquote>
+<p>水平方向的分辨率 = xres = HOZVAL = thd；<br>  水平同步信号后肩 = left_margin = HBPD = thb-thpw；<br>  水平同步信号前肩 = right_margin = HFPD = thfp；<br>  水平方向同步时间 = hsync_len = HSPW = thpw；</p>
+</blockquote>
+<blockquote>
+<p>垂直方向的分辨率 = yres = LINEVAL = tvd；<br>  垂直同步信号后肩 = upper_margin = VBPD = tvb-tvpw；<br>  垂直同步信号前肩 = lower_margin = VFPD = tvfp；<br>  垂直方向同步时间 = vsync_len = VSPW = tvpw；</p>
+</blockquote>
+<blockquote>
+<p>LCD工作时钟频率取值范围：26.4MHz ~ 46.8MHz(典型值 33.3MHz)</p>
+</blockquote>
+<p><em>行同步信号后肩和行同步信号前肩，单位是pclk(pixel clock frequence)像素时钟频率；行同步信号后肩和行同步信号前肩，分别决定了左边和右边的黑框。</em><br><em>帧同步信号后肩和帧同步信号前肩，单位是lines行；帧同步信号后肩和帧同步信号前肩分别决定了上边和下边的黑框。</em></p>
+<h2 id="3-4-LVDS-LCD时序"><a href="#3-4-LVDS-LCD时序" class="headerlink" title="3.4 LVDS-LCD时序"></a>3.4 LVDS-LCD时序</h2><p>填坑，以后再来补充….</p>
+<h2 id="3-5-eDP-LCD时序"><a href="#3-5-eDP-LCD时序" class="headerlink" title="3.5 eDP-LCD时序"></a>3.5 eDP-LCD时序</h2><p>填坑，以后再来补充….</p>
+<h2 id="3-6-MIPI-LCD时序"><a href="#3-6-MIPI-LCD时序" class="headerlink" title="3.6 MIPI-LCD时序"></a>3.6 MIPI-LCD时序</h2><p>填坑，以后再来补充….</p>
+<h1 id="4-示例代码"><a href="#4-示例代码" class="headerlink" title="4 示例代码"></a>4 示例代码</h1><h2 id="4-1-设备树代码"><a href="#4-1-设备树代码" class="headerlink" title="4.1 设备树代码"></a>4.1 设备树代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">lcd_s702@11c00000 &#123;</span><br><span class="line">    compatible = <span class="string">"tiny4412,lcd_s702"</span>;</span><br><span class="line">    reg = &lt;0x11C00000  0x20c0 0x10010210 0x08 0x10023c80 0x04 0x1003c000 0x1000&gt;;</span><br><span class="line">    pinctrl-names = <span class="string">"default"</span>;</span><br><span class="line">    pinctrl-0 = &lt;&amp;lcd_s702&gt;;</span><br><span class="line">    clocks = &lt;&amp;clock CLK_FIMD0 &amp;clock CLK_ACLK160&gt;;</span><br><span class="line">    clock-names = <span class="string">"fimd0"</span>,<span class="string">"aclk160"</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;pinctrl_0 &#123;</span><br><span class="line">	lcd_s702:lcd &#123;</span><br><span class="line">	    samsung,pins = <span class="string">"gpf0-0"</span>, <span class="string">"gpf0-1"</span>, <span class="string">"gpf0-2"</span>, <span class="string">"gpf0-3"</span>, <span class="string">"gpf0-4"</span>,</span><br><span class="line">	                   <span class="string">"gpf0-5"</span>, <span class="string">"gpf0-6"</span>,<span class="string">"gpf0-7"</span>, <span class="string">"gpf1-0"</span>, <span class="string">"gpf1-1"</span>,</span><br><span class="line">	                   <span class="string">"gpf1-2"</span>, <span class="string">"gpf1-3"</span>, <span class="string">"gpf1-4"</span>, <span class="string">"gpf1-5"</span>, <span class="string">"gpf1-6"</span>,</span><br><span class="line">	                   <span class="string">"gpf1-7"</span>, <span class="string">"gpf2-0"</span>, <span class="string">"gpf2-1"</span>, <span class="string">"gpf2-2"</span>, <span class="string">"gpf2-3"</span>,</span><br><span class="line">	                   <span class="string">"gpf2-4"</span>, <span class="string">"gpf2-5"</span>, <span class="string">"gpf2-6"</span>,<span class="string">"gpf2-7"</span>, <span class="string">"gpf3-0"</span>,</span><br><span class="line">	                   <span class="string">"gpf3-1"</span>, <span class="string">"gpf3-2"</span>, <span class="string">"gpf3-3"</span>;</span><br><span class="line">	    samsung,pin-function = &lt;2&gt;;</span><br><span class="line">	    samsung,pin-pud = &lt;0&gt;;</span><br><span class="line">	    samsung,pin-drv = &lt;0&gt;;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-驱动代码"><a href="#4-2-驱动代码" class="headerlink" title="4.2 驱动代码"></a>4.2 驱动代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;linux/init.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/module.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fs.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/platform_device.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/cdev.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/gpio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/of_gpio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/slab.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/interrupt.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/wait.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/sched.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/fb.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/delay.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/ioport.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;linux/dma-mapping.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;asm/uaccess.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;asm-generic/io.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define DEBUG_LOG		1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#if DEBUG_LOG</span></span><br><span class="line">	<span class="comment">#define DEBUG_PRINTK printk</span></span><br><span class="line"><span class="comment">#else</span></span><br><span class="line">	<span class="comment">#define DEBUG_PRINTK(x...)</span></span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#define LCM_WIDTH	800</span></span><br><span class="line"><span class="comment">#define LCM_HEIGH	480</span></span><br><span class="line"><span class="comment">#define LCM_BPP		32</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define VIDCON0			0x00</span></span><br><span class="line"><span class="comment">#define VIDCON1         0x04</span></span><br><span class="line"><span class="comment">#define VIDTCON0        0x10</span></span><br><span class="line"><span class="comment">#define VIDTCON1        0x14</span></span><br><span class="line"><span class="comment">#define VIDTCON2        0x18</span></span><br><span class="line"><span class="comment">#define WINCON0         0x20</span></span><br><span class="line"><span class="comment">#define SHADOWCON       0x34</span></span><br><span class="line"><span class="comment">#define WINCHMAP2       0x3c</span></span><br><span class="line"><span class="comment">#define VIDOSD0A        0x40</span></span><br><span class="line"><span class="comment">#define VIDOSD0B        0x44</span></span><br><span class="line"><span class="comment">#define VIDOSD0C        0x48</span></span><br><span class="line"><span class="comment">#define VIDW00ADD0B0    0xA0</span></span><br><span class="line"><span class="comment">#define VIDW00ADD1B0    0xD0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#define CLK_SRC_LCD0 		0x234 //Selects clock source for LCD_BLK</span></span><br><span class="line"><span class="comment">#define CLK_SRC_MASK_LCD	0x334 //Clock source mask for LCD_BLK</span></span><br><span class="line"><span class="comment">#define CLK_DIV_LCD			0x534 //Sets clock divider ratio for LCD_BLK</span></span><br><span class="line"><span class="comment">#define CLK_DIV_STAT_LCD 	0x634 //Clock divider status for LCD_BLK</span></span><br><span class="line"><span class="comment">#define CLK_GATE_IP_LCD 	0x934 //Controls IP clock gating for LCD_BLK</span></span><br><span class="line"><span class="comment">#define LCDBLK_CFG 			0x00 //Display control register</span></span><br><span class="line"><span class="comment">#define LCDBLK_CFG2 		0x04 //Display control register</span></span><br><span class="line"></span><br><span class="line">static struct fb_info *tiny4412_fb;</span><br><span class="line">static u32 pseudo_palette[16];</span><br><span class="line">static struct resource *mem_resource_lcm_base, *mem_resource_lcm_ctrl, *mem_resource_lcm_power, *mem_resource_lcm_clock;</span><br><span class="line">static void __iomem *lcm_base, *lcm_ctrl, *lcm_power, *lcm_clock;</span><br><span class="line"></span><br><span class="line">static inline unsigned int chan_to_field(unsigned int chan, struct fb_bitfield *bf)</span><br><span class="line">&#123;</span><br><span class="line">    chan &amp;= 0xFFFF;</span><br><span class="line">    chan &gt;&gt;= 16 - bf-&gt;length;</span><br><span class="line">    <span class="built_in">return</span> chan &lt;&lt; bf-&gt;offset;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int cfb_setcolreg(unsigned int regno, unsigned int red,</span><br><span class="line">                               unsigned int green, unsigned int blue,</span><br><span class="line">                               unsigned int transp, struct fb_info *info)</span><br><span class="line">&#123;</span><br><span class="line">    unsigned int color = 0;</span><br><span class="line">    uint32_t *p;</span><br><span class="line">    color  = chan_to_field(red,   &amp;info-&gt;var.red);</span><br><span class="line">    color |= chan_to_field(green, &amp;info-&gt;var.green);</span><br><span class="line">    color |= chan_to_field(blue,  &amp;info-&gt;var.blue);</span><br><span class="line">    </span><br><span class="line">    p = info-&gt;pseudo_palette;  </span><br><span class="line">    p[regno] = color;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static struct fb_ops tiny4412_fbops = &#123;</span><br><span class="line">	.owner              = THIS_MODULE,</span><br><span class="line">    .fb_setcolreg       = cfb_setcolreg, //设置RGB颜色，实现伪颜色表 </span><br><span class="line">    .fb_fillrect        = cfb_fillrect,  //矩形填充</span><br><span class="line">    .fb_copyarea        = cfb_copyarea,  //数据复制</span><br><span class="line">    .fb_imageblit       = cfb_imageblit, //图形填充</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static int lcm_drv_probe(struct platform_device *pdev)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int temp;</span><br><span class="line"></span><br><span class="line">	DEBUG_PRINTK(<span class="string">"------- %s -------\n"</span>,__func__);</span><br><span class="line"></span><br><span class="line">	/* 1.分配fb_info结构体 */</span><br><span class="line">	tiny4412_fb = framebuffer_alloc(0, NULL);</span><br><span class="line">	<span class="keyword">if</span>(IS_ERR(tiny4412_fb))</span><br><span class="line">	&#123;</span><br><span class="line">		DEBUG_PRINTK(<span class="string">"framebuffer_alloc error!\n"</span>);</span><br><span class="line">		<span class="built_in">return</span> -EINVAL;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/* 2.设置fb_info结构体 */</span><br><span class="line">	/* 2.1 设置固定参数 */</span><br><span class="line">	strcpy(tiny4412_fb-&gt;fix.id, <span class="string">"lcd_s702"</span>);</span><br><span class="line">	tiny4412_fb-&gt;fix.smem_len 	= LCM_WIDTH * LCM_HEIGH * LCM_BPP / 8;	// 显存物理地址(长度) </span><br><span class="line">	//tiny4412_fb-&gt;fix.smem_start = ;	// 显存物理地址(起始) </span><br><span class="line">	tiny4412_fb-&gt;fix.type 		= FB_TYPE_PACKED_PIXELS;</span><br><span class="line">	tiny4412_fb-&gt;fix.visual 	= FB_VISUAL_TRUECOLOR;</span><br><span class="line">	tiny4412_fb-&gt;fix.line_length = LCM_WIDTH * LCM_BPP / 8;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	/* 2.2 设置可变参数 */</span><br><span class="line">	tiny4412_fb-&gt;var.xres 			= LCM_WIDTH;</span><br><span class="line">	tiny4412_fb-&gt;var.yres 			= LCM_HEIGH;</span><br><span class="line">	tiny4412_fb-&gt;var.xres_virtual 	= LCM_WIDTH;</span><br><span class="line">	tiny4412_fb-&gt;var.yres_virtual 	= LCM_HEIGH;</span><br><span class="line">	tiny4412_fb-&gt;var.xoffset 		= 0;</span><br><span class="line">	tiny4412_fb-&gt;var.yoffset 		= 0;</span><br><span class="line">	tiny4412_fb-&gt;var.bits_per_pixel = LCM_BPP;</span><br><span class="line"></span><br><span class="line">	/* RGB:888 */</span><br><span class="line">	tiny4412_fb-&gt;var.red.offset 	= 16;</span><br><span class="line">	tiny4412_fb-&gt;var.red.length 	= 8;</span><br><span class="line">	tiny4412_fb-&gt;var.green.offset 	= 8;</span><br><span class="line">	tiny4412_fb-&gt;var.green.length 	= 8;</span><br><span class="line">	tiny4412_fb-&gt;var.blue.offset 	= 0;</span><br><span class="line">	tiny4412_fb-&gt;var.blue.length 	= 8;</span><br><span class="line">	tiny4412_fb-&gt;var.activate 		= FB_ACTIVATE_NOW;</span><br><span class="line"></span><br><span class="line">	/* 2.3 设置其它参数 */</span><br><span class="line">	tiny4412_fb-&gt;fbops = &amp;tiny4412_fbops;							//LCM操作函数</span><br><span class="line">	//tiny4412_fb-&gt;screen_base = ; 									//显存虚拟地址(起始) </span><br><span class="line">	tiny4412_fb-&gt;screen_size = LCM_WIDTH * LCM_HEIGH * LCM_BPP / 8;	//显存虚拟地址(长度) </span><br><span class="line">	tiny4412_fb-&gt;pseudo_palette = pseudo_palette;					//调色板</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	/* 3.硬件操作 */</span><br><span class="line">	/* 3.1 配置GPIO用于LCD */</span><br><span class="line">	//在设备树中，将 GPF0_0-GPF0_7、GPF1_0-GPF1_7、GPF2_0-GPF2_7、GPF3_0-GPF3_3</span><br><span class="line">	//配置为了复用第二功能(LCD)，禁止内部上拉，驱动强度配置设置为0;</span><br><span class="line"></span><br><span class="line">	/* 3.2 寄存器地址映射 */</span><br><span class="line">	mem_resource_lcm_base 	= platform_get_resource(pdev, IORESOURCE_MEM, 0);</span><br><span class="line">	mem_resource_lcm_ctrl 	= platform_get_resource(pdev, IORESOURCE_MEM, 1);</span><br><span class="line">	mem_resource_lcm_power 	= platform_get_resource(pdev, IORESOURCE_MEM, 2);</span><br><span class="line">	mem_resource_lcm_clock	= platform_get_resource(pdev, IORESOURCE_MEM, 3);</span><br><span class="line">	<span class="keyword">if</span>((NULL == mem_resource_lcm_base) || (NULL == mem_resource_lcm_ctrl) || (NULL == mem_resource_lcm_power) || (NULL == mem_resource_lcm_clock))</span><br><span class="line">	&#123;</span><br><span class="line">		DEBUG_PRINTK(<span class="string">"platform_get_resource error!\n"</span>);</span><br><span class="line">		<span class="built_in">return</span> -EINVAL;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	lcm_base = devm_ioremap(&amp;pdev-&gt;dev, mem_resource_lcm_base-&gt;start, resource_size(mem_resource_lcm_base));</span><br><span class="line">	lcm_ctrl = devm_ioremap(&amp;pdev-&gt;dev, mem_resource_lcm_ctrl-&gt;start, resource_size(mem_resource_lcm_ctrl));</span><br><span class="line">	lcm_power = devm_ioremap(&amp;pdev-&gt;dev, mem_resource_lcm_power-&gt;start, resource_size(mem_resource_lcm_power));</span><br><span class="line">	lcm_clock = devm_ioremap(&amp;pdev-&gt;dev, mem_resource_lcm_clock-&gt;start, resource_size(mem_resource_lcm_clock));</span><br><span class="line">	<span class="keyword">if</span>((NULL == lcm_base) || (NULL == lcm_ctrl) || (NULL == lcm_power) || (NULL == lcm_clock))</span><br><span class="line">	&#123;</span><br><span class="line">		DEBUG_PRINTK(<span class="string">"devm_ioremap error!\n"</span>);</span><br><span class="line">		<span class="built_in">return</span> -EINVAL;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	*(unsigned long *)lcm_power = 7; //Reset Value = 0x00000007</span><br><span class="line">	</span><br><span class="line">	/* 3.3 配置时钟 */</span><br><span class="line">	//时钟源选择\使能时钟</span><br><span class="line">    //Selects clock <span class="built_in">source</span> <span class="keyword">for</span> LCD_BLK</span><br><span class="line">    //FIMD0_SEL:bit[3:0]=0110=SCLKMPLL_USER_T=800M</span><br><span class="line">    temp = readl(lcm_clock + CLK_SRC_LCD0);</span><br><span class="line">	temp &amp;= ~(0xf);	</span><br><span class="line">	temp |= 0x6;</span><br><span class="line">	writel(temp, lcm_clock + CLK_SRC_LCD0);</span><br><span class="line">	</span><br><span class="line">	//Clock <span class="built_in">source</span> mask <span class="keyword">for</span> LCD_BLK    </span><br><span class="line">	//FIMD0_MASK:Mask output clock of MUXFIMD0 (1=Unmask)</span><br><span class="line">	temp = readl(lcm_clock + CLK_SRC_MASK_LCD);</span><br><span class="line">	temp |= 0x1;</span><br><span class="line">	writel(temp, lcm_clock + CLK_SRC_MASK_LCD);</span><br><span class="line"></span><br><span class="line">	//Clock <span class="built_in">source</span> mask <span class="keyword">for</span> LCD_BLK    </span><br><span class="line">	//SCLK_FIMD0 = MOUTFIMD0/(FIMD0_RATIO + 1),分频比 1/1</span><br><span class="line">	temp = readl(lcm_clock + CLK_DIV_LCD);</span><br><span class="line">	temp &amp;= ~(0xf);</span><br><span class="line">	writel(temp, lcm_clock + CLK_DIV_LCD);</span><br><span class="line"></span><br><span class="line">	//Controls IP clock gating <span class="keyword">for</span> LCD_BLK   </span><br><span class="line">	//CLK_FIMD0:Gating all clocks <span class="keyword">for</span> FIMD0 (1=Pass)</span><br><span class="line">	temp = readl(lcm_clock + CLK_GATE_IP_LCD);</span><br><span class="line">	temp |= 0x1;</span><br><span class="line">	writel(temp, lcm_clock + CLK_GATE_IP_LCD);</span><br><span class="line"></span><br><span class="line">	//FIMDBYPASS_LBLK0:FIMD of LBLK0 Bypass Selection (1=FIMD Bypass)</span><br><span class="line">	temp = readl(lcm_ctrl + LCDBLK_CFG);</span><br><span class="line">	temp |= (0x1&lt;&lt;1);</span><br><span class="line">	writel(temp, lcm_ctrl + LCDBLK_CFG);</span><br><span class="line"></span><br><span class="line">	//MIE0_DISPON:MIE0_DISPON: PWM output control (1=PWM outpupt <span class="built_in">enable</span>)</span><br><span class="line">	temp = readl(lcm_ctrl + LCDBLK_CFG2);</span><br><span class="line">	temp |= (0x1);</span><br><span class="line">	writel(temp, lcm_ctrl + LCDBLK_CFG2);</span><br><span class="line"></span><br><span class="line">	mdelay(1000);</span><br><span class="line"></span><br><span class="line">	//LCD时钟:  VCLK=FIMD*SCLK/(CLKVAL+1), <span class="built_in">where</span> CLKVAL&gt;=1</span><br><span class="line">	//800/(19+1) == 40M&lt;80M</span><br><span class="line">	temp = readl(lcm_base + VIDCON0);</span><br><span class="line">	temp |= (19&lt;&lt;6);</span><br><span class="line">	writel(temp, lcm_base + VIDCON0);</span><br><span class="line"></span><br><span class="line">	/* 3.2 配置寄存器 */</span><br><span class="line">	/* VIDCON1</span><br><span class="line">		FIXVCLK [10:9] : 01 = VCLK running</span><br><span class="line">		IVCLK  [7] : 1 = Fetches video data at VCLK rising edge</span><br><span class="line">		IHSYNC [6] : 1 = Inverted</span><br><span class="line">		IVSYNC [5] : 1 = Inverted</span><br><span class="line">	*/</span><br><span class="line">	temp = readl(lcm_base + VIDCON1);</span><br><span class="line">	temp &amp;= ~(0x3 &lt;&lt; 9);</span><br><span class="line">	temp |= (1 &lt;&lt; 9) | (1 &lt;&lt; 7) | (1 &lt;&lt; 6) | (1 &lt;&lt; 5);</span><br><span class="line">	writel(temp, lcm_base + VIDCON1);</span><br><span class="line"></span><br><span class="line">	/* VIDTCON0</span><br><span class="line">		VBPD  [[23:16] 	: Vertical back porch				tvb - tvpw + 1 = 23 - 10 ==&gt; 12 </span><br><span class="line">		VFPD  [15:8] 	: Vertical front porch				tvfp + 1 = 22 ==&gt; 21</span><br><span class="line">		VSPW  [7:0] 	: Vertical synchronization pulse	tvpw + 1 = 10 ==&gt; 9</span><br><span class="line">	*/</span><br><span class="line">	temp = readl(lcm_base + VIDTCON0);</span><br><span class="line">	temp |= (12 &lt;&lt; 16) | (21 &lt;&lt; 8) | (9);</span><br><span class="line">	writel(temp, lcm_base + VIDTCON0);</span><br><span class="line">	</span><br><span class="line">	/* VIDTCON1</span><br><span class="line">		HBPD  [[23:16] 	: Horizontal back porch				thb - thpw + 1 = 46 - 20 ==&gt; 25</span><br><span class="line">		HFPD  [15:8] 	: Horizontal front porch			thvfp + 1 = 210 ==&gt; 209</span><br><span class="line">		HSPW  [7:0] 	: Horizontal synchronization pulse	thpw + 1 = 20 ==&gt; 19</span><br><span class="line">	*/</span><br><span class="line">	temp = readl(lcm_base + VIDTCON1);</span><br><span class="line">	temp |= (25 &lt;&lt; 16) | (209 &lt;&lt; 8) | (19);</span><br><span class="line">	writel(temp, lcm_base + VIDTCON1);</span><br><span class="line">	</span><br><span class="line">	/* VIDTCON2</span><br><span class="line">		LINEVAL [21:11] : (LINEVAL + 1)				tvd + 1 = 480 ==&gt; 479</span><br><span class="line">		HOZVAL  [10:0] 	: horizontal size			thd = 800 ==&gt; 800</span><br><span class="line">	*/</span><br><span class="line">	temp = readl(lcm_base + VIDTCON2);</span><br><span class="line">	temp |= (479 &lt;&lt; 11) | (800);</span><br><span class="line">	writel(temp, lcm_base + VIDTCON2);</span><br><span class="line">	</span><br><span class="line">	/* WINCON0</span><br><span class="line">		WSWP_F [15] : 1 = Enables swap</span><br><span class="line">		BPPMODE_F [5:2] : 1101 = Unpacked 25 BPP (non-palletized A:1-R:8-G:8-B:8) \</span><br><span class="line">							Supports unpacked 32 BPP (non-palletized A:8-R:8-G:8-B:8) <span class="keyword">for</span> per pixel blending.</span><br><span class="line">		ENWIN_F [0] : 1 = Enables the video output and video control signal</span><br><span class="line">	*/</span><br><span class="line">	temp = readl(lcm_base + WINCON0);</span><br><span class="line">	temp &amp;= ~(0xf &lt;&lt; 2);</span><br><span class="line">	temp |= (1 &lt;&lt; 15) | (0xd &lt;&lt; 2) | (1);</span><br><span class="line">	writel(temp, lcm_base + WINCON0);</span><br><span class="line"></span><br><span class="line">	/* SHADOWCON</span><br><span class="line">		C0_EN_F [0] : 1 = Enables</span><br><span class="line">	*/</span><br><span class="line">	temp = readl(lcm_base + SHADOWCON);</span><br><span class="line">	temp |= (0x1);</span><br><span class="line">	writel(temp, lcm_base + SHADOWCON);</span><br><span class="line"></span><br><span class="line">	/* WINCHMAP2</span><br><span class="line">		CH0FISEL [18:16] : 001 = Window 0, Selects Channel 0<span class="string">'s channel.</span></span><br><span class="line"><span class="string">		W0FISEL [2:0] : 001 = Channel 0, Selects Window 0'</span>s channel. </span><br><span class="line">	*/</span><br><span class="line">	temp = readl(lcm_base + WINCHMAP2);</span><br><span class="line">	temp &amp;= ~(7 &lt;&lt; 16);</span><br><span class="line">	temp |= (0x1 &lt;&lt; 16);</span><br><span class="line">	temp &amp;= ~(0x7);</span><br><span class="line">	temp |= (0x1);</span><br><span class="line">	writel(temp, lcm_base + WINCHMAP2);</span><br><span class="line"></span><br><span class="line">	/* OSD是on-screen display的简称，即屏幕菜单式调节方式。即在当前显示上叠加一层显示，就像显示器的调节菜单 */</span><br><span class="line">	/* VIDOSD0A</span><br><span class="line">		OSD_LeftTopX_F [21:11] : 0</span><br><span class="line">		OSD_LeftTopY_F [10:0]  : 0</span><br><span class="line"></span><br><span class="line">	   VIDOSD0B</span><br><span class="line">	    OSD_RightBotX_F [21:11] : LCM_WIDTH</span><br><span class="line">	    OSD_RightBotY_F [10:0]  : LCM_HEIGH</span><br><span class="line"></span><br><span class="line">	   VIDOSD0C</span><br><span class="line">	   	OSDSIZE [23:0] : Height * Width (number of word)</span><br><span class="line">	*/</span><br><span class="line">	writel(0, lcm_base + VIDOSD0A);</span><br><span class="line">	writel((((LCM_WIDTH - 1) &lt;&lt; 11) | (LCM_HEIGH - 1)), lcm_base + VIDOSD0B);</span><br><span class="line">	writel(((LCM_WIDTH * LCM_HEIGH) &gt;&gt; 1), lcm_base + VIDOSD0C);</span><br><span class="line"></span><br><span class="line">	/* 启动LCD显示 */</span><br><span class="line">	/* VIDCON0</span><br><span class="line">		ENVID [1]   : 1 = Enables the video output and display control signal</span><br><span class="line">		ENVID_F [0] : 1 = Enables the video output and display control signal</span><br><span class="line">		</span><br><span class="line">		Display On: ENVID and ENVID_F are <span class="built_in">set</span> to <span class="string">"1"</span>.</span><br><span class="line">		Direct Off: ENVID and ENVID_F are <span class="built_in">set</span> to <span class="string">"0"</span> simultaneously.</span><br><span class="line">		Per Frame Off: ENVID_F is <span class="built_in">set</span> to <span class="string">"0"</span> and ENVID is <span class="built_in">set</span> to <span class="string">"1"</span>.</span><br><span class="line">	*/</span><br><span class="line">	temp = readl(lcm_base + VIDCON0);</span><br><span class="line">	temp |= (0x1&lt;&lt;1) | (0x01);</span><br><span class="line">	writel(temp, lcm_base + VIDCON0);</span><br><span class="line"></span><br><span class="line">	/* 3.3 分配显存，并把地址告诉LCD控制器 */</span><br><span class="line">	tiny4412_fb-&gt;screen_base = dma_alloc_writecombine(NULL, tiny4412_fb-&gt;fix.smem_len, (dma_addr_t *)&amp;tiny4412_fb-&gt;fix.smem_start, GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span>(NULL == tiny4412_fb-&gt;screen_base)</span><br><span class="line">	&#123;</span><br><span class="line">		DEBUG_PRINTK(<span class="string">"dma_alloc_writecombine error!\n"</span>);</span><br><span class="line">		<span class="built_in">return</span> -ENOMEM;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/* VIDW00ADD0B0</span><br><span class="line">		VBASEU_F [31:0] : Specifies A[31:0] of the start address <span class="keyword">for</span> video framebuffer.</span><br><span class="line"></span><br><span class="line">	   VIDW00ADD1B0</span><br><span class="line">	   	VBASEL_F [31:0] : Specifies A[31:0] of the end address <span class="keyword">for</span> video frame buffer.</span><br><span class="line">							VBASEL = VBASEU + (PAGEWIDTH + OFFSIZE) * (LINEVAL + 1)</span><br><span class="line">	*/</span><br><span class="line">	writel(tiny4412_fb-&gt;fix.smem_start, lcm_base + VIDW00ADD0B0);</span><br><span class="line">	writel((tiny4412_fb-&gt;fix.smem_start + tiny4412_fb-&gt;fix.smem_len), lcm_base + VIDW00ADD1B0);</span><br><span class="line"></span><br><span class="line">	/* 4.注册fb_info结构体 */</span><br><span class="line">	<span class="keyword">if</span>(0 != register_framebuffer(tiny4412_fb))</span><br><span class="line">	&#123;</span><br><span class="line">		DEBUG_PRINTK(<span class="string">"register_framebuffer error!\n"</span>);</span><br><span class="line">		<span class="built_in">return</span> -EINVAL;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int lcm_drv_remove(struct platform_device *pdev)</span><br><span class="line">&#123;</span><br><span class="line">	DEBUG_PRINTK(<span class="string">"------- %s -------\n"</span>,__func__);</span><br><span class="line"></span><br><span class="line">	unregister_framebuffer(tiny4412_fb);</span><br><span class="line">	dma_free_writecombine(&amp;pdev-&gt;dev, tiny4412_fb-&gt;screen_size, tiny4412_fb-&gt;screen_base, tiny4412_fb-&gt;fix.smem_start);</span><br><span class="line">	devm_iounmap(&amp;pdev-&gt;dev, lcm_clock);</span><br><span class="line">	devm_iounmap(&amp;pdev-&gt;dev, lcm_power);</span><br><span class="line">	devm_iounmap(&amp;pdev-&gt;dev, lcm_ctrl);</span><br><span class="line">	devm_iounmap(&amp;pdev-&gt;dev, lcm_base);</span><br><span class="line">	framebuffer_release(tiny4412_fb);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const struct of_device_id lcm_match_table[] = &#123;</span><br><span class="line">		&#123;.compatible = <span class="string">"tiny4412,lcd_s702"</span>,&#125;,</span><br><span class="line">		&#123; &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static struct platform_driver lcm_pdrv = &#123;</span><br><span class="line">	.probe	= lcm_drv_probe,</span><br><span class="line">	.remove = lcm_drv_remove,</span><br><span class="line">	.driver = &#123;</span><br><span class="line">		.name 			= <span class="string">"lcm_pdrv"</span>,</span><br><span class="line">		.of_match_table = lcm_match_table,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static int __init lcm_drv_init(void)</span><br><span class="line">&#123;</span><br><span class="line">	DEBUG_PRINTK(<span class="string">"------- %s -------\n"</span>,__func__);</span><br><span class="line">	<span class="built_in">return</span> platform_driver_register(&amp;lcm_pdrv);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void __exit lcm_drv_exit(void)</span><br><span class="line">&#123;</span><br><span class="line">	DEBUG_PRINTK(<span class="string">"------- %s -------\n"</span>,__func__);</span><br><span class="line">	platform_driver_unregister(&amp;lcm_pdrv);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module_init(lcm_drv_init);</span><br><span class="line">module_exit(lcm_drv_exit);</span><br><span class="line">MODULE_LICENSE(<span class="string">"GPL"</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">"KiFF &lt;guibin_lin@163.com&gt;"</span>);</span><br><span class="line">MODULE_DESCRIPTION(<span class="string">"Exynos4412 LCM driver."</span>);</span><br><span class="line">MODULE_VERSION(<span class="string">"V1.0"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="4-3-测试代码"><a href="#4-3-测试代码" class="headerlink" title="4.3 测试代码"></a>4.3 测试代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<p><center><a rel="noopener" href="http://creativecommons.org/licenses/by/4.0/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"></a><br>本作品采用<a rel="noopener" href="http://creativecommons.org/licenses/by/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可，欢迎转载，但转载请注明来自<a href="http://kiff.vip" target="_blank" rel="noopener">KiFF’s blog</a>，并保持转载后文章内容的完整。本人保留所有版权相关权利。</center></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-8-27/38084728.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://smallsun-image.oss-cn-shenzhen.aliyuncs.com/18-8-24/52975680.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -197,187 +335,122 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/10/08/LCD驱动合集/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/08/Exynos4412--触摸屏驱动/" class="archive-article-date">
-  	<time datetime="2018-10-08T06:35:20.519Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/10/08/Exynos4412--触摸屏驱动/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Exynos4412--触摸屏驱动</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/08/Exynos4412--触摸屏驱动/">Exynos4412--触摸屏驱动</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">驱动</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Linux驱动</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/08/Exynos4412--背光驱动/" class="archive-article-date">
-  	<time datetime="2018-10-08T06:35:20.518Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/08/Exynos4412--背光驱动/">Exynos4412--背光驱动</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">驱动</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Linux驱动</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/08/Exynos4412--按键驱动/" class="archive-article-date">
-  	<time datetime="2018-10-08T06:35:20.516Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/08/Exynos4412--按键驱动/">Exynos4412--按键驱动</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">驱动</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Linux驱动</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/08/Exynos4412--LED驱动/" class="archive-article-date">
-  	<time datetime="2018-10-08T06:35:20.515Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
-</a>
-        </div>
-    	 
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/10/08/LCD驱动合集/",
+  owner: 'guibinLin',
+  repo: 'guibinLin.github.io',
+  oauth: {
+    client_id: '059437920364ca80e70e',
+    client_secret: 'c42f82f111f4ce238dee5b0483641d6e6f63d69a',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/08/Exynos4412--LED驱动/">Exynos4412--LED驱动</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">驱动</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Linux驱动</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -400,8 +473,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
